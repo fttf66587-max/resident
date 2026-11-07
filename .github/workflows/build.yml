@@ -1,5 +1,7 @@
 name: build
 on: workflow_dispatch
+permissions:
+  contents: write
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -20,5 +22,11 @@ jobs:
           chmod +x gradlew
           ./gradlew build
           ls -la build/libs
-      - uses: actions/upload-artifact@v4
-        with: {name: mod, path: "mdk/build/libs/*.jar"}
+          cp "$(ls build/libs/*.jar | head -1)" ../residentevil-mod.jar
+      - name: Save jar to repo
+        run: |
+          git config user.name build-bot
+          git config user.email bot@example.com
+          git add residentevil-mod.jar
+          git commit -m "Built mod jar"
+          git push
