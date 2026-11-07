@@ -1,4 +1,4 @@
-name: build
+name: make
 on: workflow_dispatch
 permissions:
   contents: write
@@ -21,12 +21,11 @@ jobs:
           sed -i 's/^mod_id=.*/mod_id=residentevil/; s/^mod_name=.*/mod_name=Resident Evil/; s/^mod_group_id=.*/mod_group_id=com.residentevil/' gradle.properties
           chmod +x gradlew
           ./gradlew build
-          ls -la build/libs
           cp "$(ls build/libs/*.jar | head -1)" ../residentevil-mod.jar
-      - name: Save jar to repo
+      - name: Save jar
         run: |
-          git config user.name build-bot
+          git config user.name bot
           git config user.email bot@example.com
           git add residentevil-mod.jar
-          git commit -m "Built mod jar"
+          git commit -m jar
           git push
