@@ -17,6 +17,8 @@ jobs:
           mkdir mdk && unzip -q mdk.zip -d mdk
           rm -rf mdk/src
           cp -r re/src mdk/src
+          sed -i 's/new Item(p.sword(ToolMaterial.IRON, 3.0f, -1.6f))/new SwordItem(ToolMaterial.IRON, 3.0f, -1.6f, p)/' mdk/src/main/java/com/residentevil/ModItems.java
+          sed -i 's/causeFallDamage(double d/causeFallDamage(float d/' mdk/src/main/java/com/residentevil/Wesker.java
           cd mdk
           sed -i 's/^mod_id=.*/mod_id=residentevil/; s/^mod_name=.*/mod_name=Resident Evil/; s/^mod_group_id=.*/mod_group_id=com.residentevil/' gradle.properties
           chmod +x gradlew
